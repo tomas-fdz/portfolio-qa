@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Porfolio QA</title>
+  <!-- Inline script to set the initial theme (adds .dark to <html>)
+         Runs before React mounts to avoid FOUC. It prefers a saved
+         localStorage value, otherwise falls back to prefers-color-scheme. -->
+  <script>
+    (function () {
+      try {
+        var theme = localStorage.getItem('theme');
+        if (theme === 'dark') {
+          document.documentElement.classList.add('dark');
+          return;
+        }
+        if (theme === 'light') {
+          document.documentElement.classList.remove('dark');
+          return;
+        }
+        // No explicit preference saved: use system preference
+        var mql = window.matchMedia('(prefers-color-scheme: dark)');
+        if (mql && mql.matches) {
+          document.documentElement.classList.add('dark');
+        } else {
+          document.documentElement.classList.remove('dark');
+        }
+      } catch (e) {
+        // If anything fails, don't block loading the page
+        console.error(e);
+      }
+    })();
+  </script>
+</head>
+
+<body>
+  <div id="root"></div>
+  <script type="module" src="/src/main.jsx"></script>
+</body>
+
+</html>
