@@ -46,7 +46,7 @@ npm run dev
 Nombre: Tomás Fernández
 Rol: QA Automation Engineer
 GitHub: https://github.com/tomas-fdz
-LinkedIn: https://www.linkedin.com/in/TU_PERFIL
+LinkedIn: https://www.linkedin.com/in/tomasfdz11/
 
 🪪 Licencia
 Este proyecto está bajo la licencia MIT
