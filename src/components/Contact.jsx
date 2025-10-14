@@ -10,18 +10,37 @@ export default function Contact() {
         message: ''
     })
 
-    // Manejador simple para los cambios del formulario
+    // NUEVO: estado para controlar si el formulario se está enviando
+    const [isSubmitting, setIsSubmitting] = useState(false)
+
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value })
     }
 
-    // Manejador para la sumisión (Solo visual, no funcional)
-    const handleSubmit = (e) => {
+    // CAMBIO: handleSubmit actualizado para enviar datos a Formspree
+    const handleSubmit = async (e) => {
         e.preventDefault()
-        alert('Mensaje enviado (simulación). ¡Gracias por contactarme!')
-        console.log('Datos a enviar:', formData)
-        // Aquí iría la lógica de envío real a un backend/servicio (ej: Formspree)
-        setFormData({ name: '', email: '', message: '' }) // Reset
+        setIsSubmitting(true) // bloquear el botón mientras se envía
+
+        try {
+            const response = await fetch('https://formspree.io/f/mgvnrwnw', { // ID de Formspree
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(formData)
+            })
+
+            if (response.ok) {
+                alert('Mensaje enviado correctamente. ¡Gracias por contactarme!')
+                setFormData({ name: '', email: '', message: '' }) // resetear formulario
+            } else {
+                alert('Hubo un error al enviar el mensaje. Intenta de nuevo.')
+            }
+        } catch (error) {
+            console.error('Error enviando formulario:', error)
+            alert('Error de red. Revisa tu conexión.')
+        } finally {
+            setIsSubmitting(false)
+        }
     }
 
     return (
@@ -82,11 +101,13 @@ export default function Contact() {
                             ></textarea>
                         </div>
 
+                        {/* CAMBIO: botón deshabilitado mientras se envía */}
                         <button
                             type="submit"
-                            className="w-full py-3 text-lg font-semibold rounded-lg bg-indigo-600 text-white hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-600 transition-colors"
+                            disabled={isSubmitting}
+                            className="w-full py-3 text-lg font-semibold rounded-lg bg-indigo-600 text-white hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-600 transition-colors disabled:opacity-50"
                         >
-                            Enviar Mensaje
+                            {isSubmitting ? 'Enviando...' : 'Enviar Mensaje'}
                         </button>
                     </form>
                 </div>
@@ -98,7 +119,6 @@ export default function Contact() {
                     </h4>
 
                     <div className="space-y-4">
-                        {/* Enlace a LinkedIn (Placeholder) */}
                         <a
                             href="https://www.linkedin.com/in/tomasfdz11/"
                             target="_blank"
@@ -112,7 +132,6 @@ export default function Contact() {
                             <LinkIcon className="w-4 h-4 ml-auto text-gray-400 dark:text-gray-500" />
                         </a>
 
-                        {/* Enlace a GitHub (Placeholder) */}
                         <a
                             href="https://github.com/tomas-fdz"
                             target="_blank"
