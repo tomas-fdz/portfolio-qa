@@ -17,13 +17,16 @@ export default function Contact() {
         setFormData({ ...formData, [e.target.name]: e.target.value })
     }
 
+    const FORMSPREE_URL = `https://formspree.io/f/${import.meta.env.VITE_FORMSPREE_ID}`
+
     // CAMBIO: handleSubmit actualizado para enviar datos a Formspree
     const handleSubmit = async (e) => {
         e.preventDefault()
         setIsSubmitting(true) // bloquear el botón mientras se envía
 
         try {
-            const response = await fetch('https://formspree.io/f/mgvnrwnw', { // ID de Formspree
+            // 🔹 CAMBIO: uso de la variable en lugar de la URL fija
+            const response = await fetch(FORMSPREE_URL, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(formData)
