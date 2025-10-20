@@ -20,7 +20,7 @@ Desarrollado con **React, Tailwind y Vite** sobre entorno **Node.js**, este siti
 
 ## 🌐 Demo en línea
 
-🔗 **Deploy:** Link a Vercel
+🔗 **Deploy:** https://portfolio-qa-ebon.vercel.app/
 
 ---
 
